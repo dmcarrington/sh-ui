@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError } from "axios";
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -10,7 +10,7 @@ type ServerError = {
 
 export const loginWithLN = async (): Promise<any> => {
   try {
-    const response = await axios.get('user/login-lnurl');
+    const response = await axios.get("user/login-lnurl");
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -20,8 +20,30 @@ export const loginWithLN = async (): Promise<any> => {
       }
     }
   }
-}
+};
 
-export const pusherKey = process.env.NEXT_PUBLIC_PUSHER_KEY
-export const pusherChannel = process.env.NEXT_PUBLIC_PUSHER_CHANNEL
-export const pusherCluster = process.env.NEXT_PUBLIC_PUSHER_CLUSTER
+export const loginWithEmail = async (credentials: {
+  email: string;
+  password: string;
+}): Promise<any> => {
+  try {
+    console.log(credentials);
+    const response = await axios({
+      method: "post",
+      url: "user/login-email",
+      data: { email: credentials.email, password: credentials.password },
+    });
+    return response;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const serverError = error as AxiosError<ServerError>;
+      if (serverError && serverError.response) {
+        return serverError.response.data;
+      }
+    }
+  }
+};
+
+export const pusherKey = process.env.NEXT_PUBLIC_PUSHER_KEY;
+export const pusherChannel = process.env.NEXT_PUBLIC_PUSHER_CHANNEL;
+export const pusherCluster = process.env.NEXT_PUBLIC_PUSHER_CLUSTER;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { loginWithLN, pusherKey, pusherChannel, pusherCluster} from '../api';
+import { loginWithLN, loginWithEmail, pusherKey, pusherChannel, pusherCluster} from '../api';
 import { useRouter } from 'next/router';
 
 import Pusher from 'pusher-js';
@@ -11,24 +11,35 @@ interface LNData {
   key: string;
 }
 
+interface AccountData {
+  email: string
+  password: string
+}
+
 interface Props {
   children: React.ReactNode;
 }
 
 interface IAuthContext {
   handleLoginWithLN: () => void;
+  handleLoginWithEmail: (credentials: any) => void;
   lnData: LNData;
+  accountData: AccountData;
 }
 
 const defaultState = {
   handleLoginWithLN: () => {},
-  lnData: {encoded: "", secret: "", url: "", key: ""}
+  handleLoginWithEmail: (credentials: any) => {},
+  // TODO: get a unified account model merging ln and email fields from mongo
+  lnData: {encoded: "", secret: "", url: "", key: ""},
+  accountData: {email: "", password: ""}
 };
 
 export const AuthContext = React.createContext<IAuthContext>(defaultState);
 
 export const AuthContextProvider = ({ children }: Props) => {
   const [lnData, setLnData] = useState(defaultState.lnData);
+  const [accountData, setAccountData] = useState(defaultState.accountData)
 
   const router = useRouter();
 
@@ -46,6 +57,11 @@ export const AuthContextProvider = ({ children }: Props) => {
           lndata.key = data.key
           setLnData(lndata)
           router.push('/dashboard/');
+        } else if(data.email) {
+          let accountdata = accountData
+          accountData.email = data.email
+          setAccountData(accountdata)
+          router.push('/dashboard')
         }
       })
 
@@ -58,13 +74,26 @@ export const AuthContextProvider = ({ children }: Props) => {
   }, []);
 
   const handleLoginWithLN = async () => {
-    let response = await loginWithLN();
-    setLnData(response.data)
+    const response = await loginWithLN();
+    if(response){
+      setLnData(response.data)
+    }
+    
+  }
+
+  const handleLoginWithEmail = async(credentials: { email: string; password: string; }) => {
+    console.log("handleLoginWithEmail: " + credentials)
+    const response = await loginWithEmail(credentials);
+    if(response){
+      setAccountData(response.data)
+    }
   }
 
   const contextValue = {
     lnData,
+    accountData,
     handleLoginWithLN,
+    handleLoginWithEmail
   };
 
   return (
