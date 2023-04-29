@@ -1,0 +1,9 @@
+version: "2.2"
+
+services:
+  sh-ui:
+    container_name: sh-ui
+    build: .
+    env_file:
+      - .env
+
