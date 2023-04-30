@@ -8,13 +8,17 @@ const crypto = require('crypto');
 
 const Home: NextPage = () => {
   const { lnData , accountData} = useContext(AuthContext);
-  const key = lnData.key; 
+  const key = accountData.key; 
   const email = accountData.email
+  let name = "Anon"
+  if(accountData.name){
+    name = accountData.name
+  }
   return (
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>
-         <a>Ln-Auth Authenticated!</a> Dashboard
+         <a>Ln-Auth Authenticated!</a> Dashboard - {name}
         </h1>
         <b>Key:</b> {key}
         <b>email:</b> {email}

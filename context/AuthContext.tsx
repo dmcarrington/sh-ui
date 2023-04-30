@@ -12,8 +12,10 @@ interface LNData {
 }
 
 interface AccountData {
+  key: string
   email: string
   password: string
+  name: string
 }
 
 interface Props {
@@ -32,7 +34,7 @@ const defaultState = {
   handleLoginWithEmail: (credentials: any) => {},
   // TODO: get a unified account model merging ln and email fields from mongo
   lnData: {encoded: "", secret: "", url: "", key: ""},
-  accountData: {email: "", password: ""}
+  accountData: {key: "", email: "", password: "", name: ""}
 };
 
 export const AuthContext = React.createContext<IAuthContext>(defaultState);
@@ -52,17 +54,12 @@ export const AuthContextProvider = ({ children }: Props) => {
       const channel =  pusher.subscribe(pusherChannel!)
       
       channel.bind("auth", function(data:any) {
-        if (data.key) {
-          let lndata = lnData
-          lndata.key = data.key
-          setLnData(lndata)
-          router.push('/dashboard/');
-        } else if(data.email) {
           let accountdata = accountData
+          accountData.key = data.key
           accountData.email = data.email
+          accountData.name = data.name
           setAccountData(accountdata)
           router.push('/dashboard')
-        }
       })
 
       return (() => {
