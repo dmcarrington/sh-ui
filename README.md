@@ -40,7 +40,7 @@ As an alternative to building and running the client and service individually, y
 
 ## Usage
 
-Once the client has started, you should see a `user connected` message in the _server_ logs, as the client connects to it over websocket. Click the "log in with lighning button", at which point a QR code should be displayed. Scan this with your lighning wallet, at which point, it should ask you if you want to log in to the domain of your temporary ngrok address. Select "Yes", if authentication is successful, you should be instantly routed to the Dashbaord page.
+Once the client has started, you should see a `user connected` message in the _server_ logs, as the client connects to it over websocket. Click the "log in with lighning button", at which point a QR code should be displayed. Scan this with your lighning wallet, at which point, it should ask you if you want to log in to the domain of your temporary ngrok address. Select "Yes", if authentication is successful, you should be instantly routed to the Dashboard page.
 
 ## Demo Video
 
