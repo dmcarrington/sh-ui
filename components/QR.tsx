@@ -10,6 +10,7 @@ const QR = () => {
         value={lnData.encoded.toLocaleUpperCase()}
         includeMargin
         size={256}
+        style={{textAlign:'center'}}
       />
       <p>
         <em>Scan the code above with an LNURL-enabled wallet</em>

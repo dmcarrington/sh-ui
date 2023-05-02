@@ -1,6 +1,6 @@
 .container {
   padding: 0 2rem;
-  border: 6px solid rgb(118, 182, 243);
+  border: 6px solid #ff9416;
 }
 
 .main {
@@ -30,7 +30,7 @@
 }
 
 .title a {
-  color: #0070f3;
+  color: #ff9416;
   text-decoration: none;
 }
 
@@ -90,7 +90,7 @@
 .card:focus,
 .card:active {
   color: #0070f3;
-  border-color: #0070f3;
+  border-color: #ff9416;
 }
 
 .card h2 {
@@ -117,8 +117,8 @@
 }
 
 .navigate {
-    color: #0070f3;
-    font-weight: 600;
+  color: #ff9416;
+  font-weight: 600;
 }
 .navigate:hover {
   text-decoration: underline;

@@ -4,6 +4,8 @@ import type { NextPage } from 'next';
 import styles from '../styles/Login.module.css';
 import { AuthContext } from '../context/AuthContext';
 import QR from '../components/QR';
+import Image from 'next/image'
+const satoshisHiveLogo = require('../public/satoshis_hive_logo.png')
 
 const Login: NextPage = () => {
   const { handleLoginWithLN, lnData, handleLoginWithEmail, accountData} = useContext(AuthContext);
@@ -16,14 +18,16 @@ const Login: NextPage = () => {
   }
   return (
     <section className={styles.container}>
+      <Image id={styles.logo} src={satoshisHiveLogo} width={150} height={150}/>
       {lnData.encoded ? (
         <QR />
       ) : (
+        
         <aside className={styles.content}>
           <h3 className={styles.copy}>Login to view your dashboard</h3>
           <button
             onClick={handleLoginWithLN}
-            className={`${styles.btn} ${styles.btn_primary}`}
+            className={`${styles.btn} ${styles.btn_lightning}`}
           >
             <LightningIcon fill="#fff" className={styles.ln_icon} /> Login via
             Lightning
