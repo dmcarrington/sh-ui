@@ -9,7 +9,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Sotoshi's Hive </title>
         <meta name="description" content="Bitcoin, Lightning" />
       </Head>
 
