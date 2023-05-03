@@ -41,6 +41,7 @@ const Login: NextPage = () => {
               type="password"
               onChange = {(e) => setPassword(e.target.value)} value = {password}
             />
+            // TODO: // ensure confirmation matches and disable submit until it does
             <input
               id="confirmPwdInput"
               aria-label="confirmpwd"
