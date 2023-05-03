@@ -44,6 +44,28 @@ export const loginWithEmail = async (credentials: {
   }
 };
 
+export const registerWithEmail = async (credentials: {
+  email: string;
+  password: string;
+}): Promise<any> => {
+  try {
+    console.log(credentials);
+    const response = await axios({
+      method: "post",
+      url: "user/signup-username",
+      data: { email: credentials.email, password: credentials.password },
+    });
+    return response;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const serverError = error as AxiosError<ServerError>;
+      if (serverError && serverError.response) {
+        return serverError.response.data;
+      }
+    }
+  }
+};
+
 export const pusherKey = process.env.NEXT_PUBLIC_PUSHER_KEY;
 export const pusherChannel = process.env.NEXT_PUBLIC_PUSHER_CHANNEL;
 export const pusherCluster = process.env.NEXT_PUBLIC_PUSHER_CLUSTER;

@@ -1,39 +1,25 @@
 import React, { useContext, useState } from 'react';
-import { LightningIcon } from '../assets/icons';
 import type { NextPage } from 'next';
 import styles from '../styles/Login.module.css';
 import { AuthContext } from '../context/AuthContext';
-import QR from '../components/QR';
 import Image from 'next/image'
-import Link from 'next/link'
 const satoshisHiveLogo = require('../public/satoshis_hive_logo.png')
 
 const Login: NextPage = () => {
-  const { handleLoginWithLN, lnData, handleLoginWithEmail, accountData} = useContext(AuthContext);
+  const { handleLoginWithEmail, handleRegisterWithEmail} = useContext(AuthContext);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const handleSubmit = (e:any) => {
     e.preventDefault()
     console.log(`submit: ${email}, ${password}`)
-    handleLoginWithEmail({email:email, password:password})
+    handleRegisterWithEmail({email:email, password:password})
   }
   return (
     <section className={styles.container}>
       <Image id={styles.logo} src={satoshisHiveLogo} width={150} height={150}/>
-      {lnData.encoded ? (
-        <QR />
-      ) : (
-        
         <aside className={styles.content}>
-          <h3 className={styles.copy}>Login to view your dashboard</h3>
-          <button
-            onClick={handleLoginWithLN}
-            className={`${styles.btn} ${styles.btn_lightning}`}
-          >
-            <LightningIcon fill="#fff" className={styles.ln_icon} /> Login via
-            Lightning
-          </button>
-          <p>or</p>
+          <h3 className={styles.copy}>Enter your email and password to register</h3>
           <form onSubmit={handleSubmit}>
             <label className={styles.input_label} htmlFor="emailInput">
               Email
@@ -55,6 +41,13 @@ const Login: NextPage = () => {
               type="password"
               onChange = {(e) => setPassword(e.target.value)} value = {password}
             />
+            <input
+              id="confirmPwdInput"
+              aria-label="confirmpwd"
+              className={styles.input}
+              type="password"
+              onChange = {(e) => setConfirmPassword(e.target.value)} value = {confirmPassword}
+            />
             <button
               // TODO: make disabled until a valid email and password have been entered
               disabled={false}
@@ -62,14 +55,10 @@ const Login: NextPage = () => {
               type="submit"
               className={`${styles.btn} ${styles.btn_primary}`}
             >
-              Login via Email
+              Signup with Email
             </button>
-            <Link  href="/register">
-            <a className={styles.navigate}>Create account</a>
-          </Link>
           </form>
         </aside>
-      )}
     </section>
   );
 };

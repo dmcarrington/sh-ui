@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { loginWithLN, loginWithEmail, pusherKey, pusherChannel, pusherCluster} from '../api';
+import { loginWithLN, loginWithEmail, pusherKey, pusherChannel, pusherCluster, registerWithEmail} from '../api';
 import { useRouter } from 'next/router';
 
 import Pusher from 'pusher-js';
@@ -25,6 +25,7 @@ interface Props {
 interface IAuthContext {
   handleLoginWithLN: () => void;
   handleLoginWithEmail: (credentials: any) => void;
+  handleRegisterWithEmail: (credentials: any) => void;
   lnData: LNData;
   accountData: AccountData;
 }
@@ -32,6 +33,7 @@ interface IAuthContext {
 const defaultState = {
   handleLoginWithLN: () => {},
   handleLoginWithEmail: (credentials: any) => {},
+  handleRegisterWithEmail: (credentials: any) => {},
   // TODO: get a unified account model merging ln and email fields from mongo
   lnData: {encoded: "", secret: "", url: "", key: ""},
   accountData: {key: "", email: "", password: "", name: ""}
@@ -86,11 +88,20 @@ export const AuthContextProvider = ({ children }: Props) => {
     }
   }
 
+  const handleRegisterWithEmail = async(credentials: { email: string; password: string; }) => {
+    console.log("handleRegisterWithEmail: " + credentials)
+    const response = await registerWithEmail(credentials);
+    if(response){
+      router.push('/login')
+    }
+  }
+
   const contextValue = {
     lnData,
     accountData,
     handleLoginWithLN,
-    handleLoginWithEmail
+    handleLoginWithEmail,
+    handleRegisterWithEmail
   };
 
   return (
