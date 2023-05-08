@@ -8,6 +8,7 @@ import {
     signEvent,
   } from "nostr-tools";
   import styles from '../styles/Nostr.module.css';
+  import NostrMessage from './NostrMessage'
 
 const NostrPanel = () => {
   const { accountData } = useContext(AuthContext);
@@ -23,7 +24,7 @@ const NostrPanel = () => {
   const [relay, setRelay] = useState(null);
   const [pubStatus, setPubStatus] = useState("");
   const [newEvent, setNewEvent] = useState(null);
-  const [events, setEvents] = useState(null);
+  const [events, setEvents] = useState([]);
   const [publishMessageContent, setPublishMessageContent] = useState('')
 
   useEffect(() => {
@@ -46,6 +47,20 @@ const NostrPanel = () => {
     connectRelay();
   
   },[]);
+
+  // Run these functions every 5 seconds after initial page load
+  useEffect(() => {
+    /*const interval = setInterval(() => {
+      console.log(relay)
+    }, 5000);
+    return () => clearInterval(interval);*/
+    console.log(relay)
+    if(relay){
+      //getEvents()
+      subscribeHiveEvents()
+    }
+    
+  }, [relay]);
 
   var event = {
     kind: 1,
@@ -72,16 +87,20 @@ const NostrPanel = () => {
   };
 
   // Get our event from relay
-  const getEvent = async () => {
+  const subscribeHiveEvents = async () => {
     var sub = relay.sub([
       {
         kinds: [1],
-        authors: [pk],
+        "#t": ["satoshis_hive"]
+        //authors: [pk],
       },
     ]);
     if (sub) {
       sub.on("event", (event) => {
-        setNewEvent(event);
+        console.log(event)
+        let updatedEvents = events
+        updatedEvents.push(event)
+        setEvents(updatedEvents);
       });
     }
   };
@@ -91,7 +110,6 @@ const NostrPanel = () => {
     var events = await relay.list([
       {
         kinds: [1],
-        authors: [pk],
         "#t": ["satoshis_hive"]
       },
     ]);
@@ -123,9 +141,12 @@ const NostrPanel = () => {
       <button onClick={() => getEvents()}> load feed</button>
       {events !== null &&
         events.map((event) => (
-          <p key={event.sig} style={{ borderStyle: "ridge", padding: 10 }}>
-            {event.content}
-          </p>
+          <NostrMessage 
+            sender={event.pubkey}
+            content={event.content}
+            timestamp={event.created_at}
+            key={event.sig}
+            />
         ))}
     </div>
   );
