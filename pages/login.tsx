@@ -57,7 +57,7 @@ const Login: NextPage = () => {
             />
             <button
               // TODO: make disabled until a valid email and password have been entered
-              disabled={false}
+              disabled={password == "" || email == ""}
               id="submit"
               type="submit"
               className={`${styles.btn} ${styles.btn_primary}`}
