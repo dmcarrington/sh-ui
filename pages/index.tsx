@@ -4,13 +4,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 const satoshisHiveLogo = require('../public/satoshis_hive_logo.png')
+import Favicon from '../components/Favicon';
 
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Sotoshi's Hive </title>
+        <title>Satoshi's Hive </title>
         <meta name="description" content="Bitcoin, Lightning" />
+        <Favicon />
       </Head>
 
       <main className={styles.main}>

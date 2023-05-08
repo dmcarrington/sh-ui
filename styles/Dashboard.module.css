@@ -1,9 +1,16 @@
 .container {
   padding: 0 2rem;
   border: 6px solid #ff9416;
+  display: flex;
+}
+
+.side {
+  flex: 1;
+  padding: 10px;
 }
 
 .main {
+  min-width: 80vw;
   min-height: 100vh;
   padding: 4rem 0;
   flex: 1;
