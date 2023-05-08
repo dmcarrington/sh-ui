@@ -15,16 +15,20 @@ const NostrPanel = () => {
     console.log("nostrSk: " + accountData.nostrSk)
     return accountData.nostrSk;
   });
-  const [pk, setPk] = useState(getPublicKey(sk));
+  const [pk, setPk] = useState(() => {
+    console.log("nostrPk: " + accountData.nostrPk)
+    return accountData.nostrPk;
+  });
   const [relay, setRelay] = useState(null);
   const [pubStatus, setPubStatus] = useState("");
   const [newEvent, setNewEvent] = useState(null);
   const [events, setEvents] = useState(null);
+  const [publishMessageContent, setPublishMessageContent] = useState('')
 
   useEffect(() => {
     const connectRelay = async () => {
       try {
-        const relay = relayInit("wss://relay.snort.social");
+        const relay = relayInit("wss://relay.damus.io");
         await relay.connect();
         relay.on("connect", () => {
           console.log("setting relay: ", relay)
@@ -39,30 +43,30 @@ const NostrPanel = () => {
     };
 
     connectRelay();
-    return () => {};
+  
+  },[]);
 
-    //localStorage.setItem("sh_sk", sk);
-  },[relay]);
-
-  // Create a sample event to publish to relay
   var event = {
     kind: 1,
     pubkey: pk,
     created_at: Math.floor(Date.now() / 1000),
-    tags: [],
-    content: "We are testing Nostr with react",
+    tags: [["t","satoshis_hive"]],
+    content: ""
   };
 
-  event.id = getEventHash(event);
-  event.sig = signEvent(event, sk);
-
   const publishEvent = (event) => {
+    event.content=publishMessageContent
+    console.log(event)
+    event.id = getEventHash(event);
+    event.sig = signEvent(event, sk);
+    
     const pub = relay.publish(event);
     pub.on("ok", () => {
       setPubStatus("our event is published");
     });
     pub.on("failed", (reason) => {
-      setPubStatus(`failed to publish message ${reason}`);
+      setPubStatus(`failed to publish message: ${reason}`);
+      console.log(relay)
     });
   };
 
@@ -86,8 +90,11 @@ const NostrPanel = () => {
     var events = await relay.list([
       {
         kinds: [1],
+        authors: [pk],
+        "#t": ["satoshis_hive"]
       },
     ]);
+    console.log(events)
     setEvents(events);
   };
 
@@ -99,7 +106,8 @@ const NostrPanel = () => {
       ) : (
         <p>Could not connect to relay</p>
       )}
-      <button onClick={() => publishEvent(event)}> publish event</button>
+      <input id="messageContent" onChange= {(e) => setPublishMessageContent(e.target.value)} value={publishMessageContent}></input>
+      <button onClick={() => publishEvent(event)}>Post Message</button>
       <p>Publish status: {pubStatus}</p>
       <button onClick={() => getEvent()}> Get event</button>
       {newEvent ? (
