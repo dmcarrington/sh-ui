@@ -5,6 +5,7 @@ import { AuthContext } from '../context/AuthContext'
 import styles from '../styles/Dashboard.module.css'
 import { useContext } from 'react';
 const crypto = require('crypto');
+import NostrPanel from '../components/nostr'
 
 const Home: NextPage = () => {
   const { lnData , accountData} = useContext(AuthContext);
@@ -18,10 +19,20 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>
-         <a>Ln-Auth Authenticated!</a> Dashboard - {name}
+         Dashboard - {name}
         </h1>
-        <b>Key:</b> {key}
-        <b>email:</b> {email}
+        { key != undefined ?
+          <span><b>Key: </b>{key}</span>
+          : 
+          <br></br>
+        }
+        { email != undefined ?
+          <span><b>email: </b>{email}</span>
+          :
+          <br></br>
+        }
+        
+        <NostrPanel />
       </main>
     </div>
   )

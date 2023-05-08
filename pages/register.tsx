@@ -41,17 +41,19 @@ const Login: NextPage = () => {
               type="password"
               onChange = {(e) => setPassword(e.target.value)} value = {password}
             />
-            // TODO: // ensure confirmation matches and disable submit until it does
+            <label className={styles.input_label} htmlFor="confirmPwdInput">
+              Confirm Password
+            </label>
             <input
               id="confirmPwdInput"
               aria-label="confirmpwd"
-              className={styles.input}
+              className={confirmPassword === password? styles.input: styles.invalidInput}
               type="password"
               onChange = {(e) => setConfirmPassword(e.target.value)} value = {confirmPassword}
             />
             <button
               // TODO: make disabled until a valid email and password have been entered
-              disabled={false}
+              disabled={confirmPassword!=password && password!= ""}
               id="submit"
               type="submit"
               className={`${styles.btn} ${styles.btn_primary}`}

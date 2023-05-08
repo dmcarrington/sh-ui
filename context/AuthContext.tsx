@@ -16,6 +16,8 @@ interface AccountData {
   email: string
   password: string
   name: string
+  nostrSk: string
+  nostrPk: string
 }
 
 interface Props {
@@ -36,7 +38,7 @@ const defaultState = {
   handleRegisterWithEmail: (credentials: any) => {},
   // TODO: get a unified account model merging ln and email fields from mongo
   lnData: {encoded: "", secret: "", url: "", key: ""},
-  accountData: {key: "", email: "", password: "", name: ""}
+  accountData: {key: "", email: "", password: "", name: "", nostrSk: "", nostrPk: ""}
 };
 
 export const AuthContext = React.createContext<IAuthContext>(defaultState);
@@ -60,6 +62,9 @@ export const AuthContextProvider = ({ children }: Props) => {
           accountData.key = data.key
           accountData.email = data.email
           accountData.name = data.name
+          accountData.nostrSk = data.nostrSk
+          accountData.nostrPk = data.nostrPk
+          console.log(accountData)
           setAccountData(accountdata)
           router.push('/dashboard')
       })
