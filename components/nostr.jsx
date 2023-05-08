@@ -50,7 +50,7 @@ const NostrPanel = () => {
   // As soon as we are connected to the relay, subscribe to our group stream
   useEffect(() => {
     console.log("relay: " + relay);
-    if (relay && relay.conn) {
+    if (relay) {
       subscribeHiveEvents();
     }
   }, [relay]);
