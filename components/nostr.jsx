@@ -7,6 +7,7 @@ import {
     relayInit,
     signEvent,
   } from "nostr-tools";
+  import styles from '../styles/Nostr.module.css';
 
 const NostrPanel = () => {
   const { accountData } = useContext(AuthContext);
@@ -106,8 +107,12 @@ const NostrPanel = () => {
       ) : (
         <p>Could not connect to relay</p>
       )}
-      <input id="messageContent" onChange= {(e) => setPublishMessageContent(e.target.value)} value={publishMessageContent}></input>
-      <button onClick={() => publishEvent(event)}>Post Message</button>
+      <div className={styles.container}>
+        <div className={styles.post_holder}>
+        <input id="messageContent" onChange= {(e) => setPublishMessageContent(e.target.value)} value={publishMessageContent} className={styles.input}></input>
+        <button onClick={() => publishEvent(event)} className={`${styles.btn} ${styles.btn_primary}`}>Post Message</button>
+        </div>
+      </div>
       <p>Publish status: {pubStatus}</p>
       <button onClick={() => getEvent()}> Get event</button>
       {newEvent ? (
