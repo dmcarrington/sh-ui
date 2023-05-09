@@ -1,30 +1,31 @@
-import { useContext, useState, useEffect } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { useContext, useState, useEffect } from "react";
+import { AuthContext } from "../context/AuthContext";
 import {
-    generatePrivateKey,
-    getEventHash,
-    getPublicKey,
-    relayInit,
-    signEvent,
-  } from "nostr-tools";
-  import styles from '../styles/Nostr.module.css';
+  generatePrivateKey,
+  getEventHash,
+  getPublicKey,
+  relayInit,
+  signEvent,
+} from "nostr-tools";
+import styles from "../styles/Nostr.module.css";
+import NostrMessage from "./NostrMessage";
 
 const NostrPanel = () => {
   const { accountData } = useContext(AuthContext);
 
   const [sk, setSk] = useState(() => {
-    console.log("nostrSk: " + accountData.nostrSk)
+    console.log("nostrSk: " + accountData.nostrSk);
     return accountData.nostrSk;
   });
   const [pk, setPk] = useState(() => {
-    console.log("nostrPk: " + accountData.nostrPk)
+    console.log("nostrPk: " + accountData.nostrPk);
     return accountData.nostrPk;
   });
   const [relay, setRelay] = useState(null);
   const [pubStatus, setPubStatus] = useState("");
   const [newEvent, setNewEvent] = useState(null);
-  const [events, setEvents] = useState(null);
-  const [publishMessageContent, setPublishMessageContent] = useState('')
+  const [events, setEvents] = useState([]);
+  const [publishMessageContent, setPublishMessageContent] = useState("");
 
   useEffect(() => {
     const connectRelay = async () => {
@@ -32,7 +33,7 @@ const NostrPanel = () => {
         const relay = relayInit("wss://relay.damus.io");
         await relay.connect();
         relay.on("connect", () => {
-          console.log("setting relay: ", relay)
+          console.log("setting relay: ", relay);
           setRelay(relay);
         });
         relay.on("error", () => {
@@ -44,44 +45,55 @@ const NostrPanel = () => {
     };
 
     connectRelay();
-  
-  },[]);
+  }, []);
+
+  // As soon as we are connected to the relay, subscribe to our group stream
+  useEffect(() => {
+    console.log("relay: " + relay);
+    if (relay) {
+      subscribeHiveEvents();
+    }
+  }, [relay]);
 
   var event = {
     kind: 1,
     pubkey: pk,
     created_at: Math.floor(Date.now() / 1000),
-    tags: [["t","satoshis_hive"]],
-    content: ""
+    tags: [["t", "satoshis_hive"]],
+    content: "",
   };
 
   const publishEvent = (event) => {
-    event.content=publishMessageContent
-    console.log(event)
+    event.content = publishMessageContent;
+    console.log(event);
     event.id = getEventHash(event);
     event.sig = signEvent(event, sk);
-    
+
     const pub = relay.publish(event);
     pub.on("ok", () => {
       setPubStatus("our event is published");
     });
     pub.on("failed", (reason) => {
       setPubStatus(`failed to publish message: ${reason}`);
-      console.log(relay)
+      console.log(relay);
     });
   };
 
   // Get our event from relay
-  const getEvent = async () => {
+  const subscribeHiveEvents = async () => {
     var sub = relay.sub([
       {
         kinds: [1],
-        authors: [pk],
+        "#t": ["satoshis_hive"],
+        //authors: [pk],
       },
     ]);
     if (sub) {
       sub.on("event", (event) => {
-        setNewEvent(event);
+        console.log(event);
+        let updatedEvents = events;
+        updatedEvents.push(event);
+        setEvents(updatedEvents);
       });
     }
   };
@@ -91,11 +103,10 @@ const NostrPanel = () => {
     var events = await relay.list([
       {
         kinds: [1],
-        authors: [pk],
-        "#t": ["satoshis_hive"]
+        "#t": ["satoshis_hive"],
       },
     ]);
-    console.log(events)
+    console.log(events);
     setEvents(events);
   };
 
@@ -109,23 +120,30 @@ const NostrPanel = () => {
       )}
       <div className={styles.container}>
         <div className={styles.post_holder}>
-        <input id="messageContent" onChange= {(e) => setPublishMessageContent(e.target.value)} value={publishMessageContent} className={styles.input}></input>
-        <button onClick={() => publishEvent(event)} className={`${styles.btn} ${styles.btn_primary}`}>Post Message</button>
+          <input
+            id="messageContent"
+            onChange={(e) => setPublishMessageContent(e.target.value)}
+            value={publishMessageContent}
+            className={styles.input}
+          ></input>
+          <button
+            onClick={() => publishEvent(event)}
+            className={`${styles.btn} ${styles.btn_primary}`}
+          >
+            Post Message
+          </button>
         </div>
       </div>
-      <p>Publish status: {pubStatus}</p>
-      <button onClick={() => getEvent()}> Get event</button>
-      {newEvent ? (
-        <p>Subscribed event content: {newEvent.content}</p>
-      ) : (
-        <p>no new events</p>
-      )}
-      <button onClick={() => getEvents()}> load feed</button>
+
+      <b>Latest Posts</b>
       {events !== null &&
         events.map((event) => (
-          <p key={event.sig} style={{ borderStyle: "ridge", padding: 10 }}>
-            {event.content}
-          </p>
+          <NostrMessage
+            sender={event.pubkey}
+            content={event.content}
+            timestamp={event.created_at}
+            key={event.sig}
+          />
         ))}
     </div>
   );

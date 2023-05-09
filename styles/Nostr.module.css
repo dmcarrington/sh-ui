@@ -36,7 +36,7 @@
   font-size: 0.9rem;
   line-height: 1.75;
   border-radius: 0.4rem;
-  display: flex;
+  display: inline;
   align-items: left;
   min-width: 200px;
   cursor: pointer;
@@ -56,4 +56,31 @@
   cursor: not-allowed;
   opacity: 0.85;
   background-color: #ccc;
+}
+
+.message_container {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border: 1px solid #ced4da;
+  border-radius: 0.4rem;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.message_author {
+  padding: 5px;
+  font-weight: 200;
+}
+
+.message_createdat {
+  padding: 5px;
+  font-weight: 200;
+}
+
+.message_content {
+  padding: 10px;
+  font-weight: 400;
+  line-height: 1.75;
 }
