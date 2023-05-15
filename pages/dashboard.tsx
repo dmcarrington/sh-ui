@@ -59,12 +59,12 @@ const Home: NextPage = () => {
             <Image src={satoshisHiveLogo} width={100} height={100} />
         </Box>
         <SimpleGrid columns={3} spacing={10} >
-              <DashboardCard title="Announcements" content="Offical announcements from the Satoshi's Place team" background="satoshis_hive_logo.png"></DashboardCard>
-              <DashboardCard title="Forum" content="Open forum for users to chat" background="satoshis_hive_logo.png"></DashboardCard>
-              <DashboardCard title="Marketplace" content="Buy and sell, either in person or online" background="satoshis_hive_logo.png"></DashboardCard>
-              <DashboardCard title="Resources" content="Helpful Bitcoin resources for all levels of experience" background="satoshis_hive_logo.png"></DashboardCard>
-              <DashboardCard title="Messages" content="Direct Messages" background="satoshis_hive_logo.png"></DashboardCard>
-              <DashboardCard title="Events" content="Upcoming events at Satoshi's Place and elsewhere" background="satoshis_hive_logo.png"></DashboardCard>
+              <DashboardCard title="Announcements" content="Offical announcements from the Satoshi's Place team" background="dashboard/note-34687_640.png"></DashboardCard>
+              <DashboardCard title="Forum" content="Open forum for users to chat" background="dashboard/feedback-2990424_640.jpg"></DashboardCard>
+              <DashboardCard title="Marketplace" content="Buy and sell, either in person or online" background="dashboard/pixel-art-7284052_640.png"></DashboardCard>
+              <DashboardCard title="Resources" content="Helpful Bitcoin resources for all levels of experience" background="dashboard/double-exposure-4554077_640.jpg"></DashboardCard>
+              <DashboardCard title="Messages" content="Direct Messages" background="dashboard/speech-35342_640.png"></DashboardCard>
+              <DashboardCard title="Events" content="Upcoming events at Satoshi's Place and elsewhere" background="dashboard/calendar-1763587_640.png"></DashboardCard>
         </SimpleGrid>
         </Box>
     </Box>
