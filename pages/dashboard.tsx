@@ -59,12 +59,12 @@ const Home: NextPage = () => {
             <Image src={satoshisHiveLogo} width={100} height={100} />
         </Box>
         <SimpleGrid columns={3} spacing={10} >
-              <DashboardCard title="card1" content="content1" background="satoshis_hive_logo.png"></DashboardCard>
-              <DashboardCard title="card2" content="content2" background="satoshis_hive_logo.png"></DashboardCard>
-              <DashboardCard title="card3" content="content3" background="satoshis_hive_logo.png"></DashboardCard>
-              <DashboardCard title="card4" content="content4" background="satoshis_hive_logo.png"></DashboardCard>
-              <DashboardCard title="card5" content="content5" background="satoshis_hive_logo.png"></DashboardCard>
-              <DashboardCard title="card6" content="content6  " background="satoshis_hive_logo.png"></DashboardCard>
+              <DashboardCard title="Announcements" content="Offical announcements from the Satoshi's Place team" background="satoshis_hive_logo.png"></DashboardCard>
+              <DashboardCard title="Forum" content="Open forum for users to chat" background="satoshis_hive_logo.png"></DashboardCard>
+              <DashboardCard title="Marketplace" content="Buy and sell, either in person or online" background="satoshis_hive_logo.png"></DashboardCard>
+              <DashboardCard title="Resources" content="Helpful Bitcoin resources for all levels of experience" background="satoshis_hive_logo.png"></DashboardCard>
+              <DashboardCard title="Messages" content="Direct Messages" background="satoshis_hive_logo.png"></DashboardCard>
+              <DashboardCard title="Events" content="Upcoming events at Satoshi's Place and elsewhere" background="satoshis_hive_logo.png"></DashboardCard>
         </SimpleGrid>
         </Box>
     </Box>
