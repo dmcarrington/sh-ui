@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
-import { AuthContext } from '../context/AuthContext'
+import { useAuth } from '../context/AuthContext'
 import styles from '../styles/Dashboard.module.css'
 import { useContext } from 'react';
 const crypto = require('crypto');
@@ -10,7 +10,8 @@ import NostrPanel from '../components/nostr'
 const satoshisHiveLogo = require('../public/satoshis_hive_logo.png')
 
 const Forum: NextPage = () => {
-  const { lnData , accountData} = useContext(AuthContext);
+  const { lnData , accountData} = useAuth();
+  console.log(accountData)
   const key = accountData.key; 
   const email = accountData.email
   let name = "Anon"

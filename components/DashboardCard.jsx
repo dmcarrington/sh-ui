@@ -19,6 +19,7 @@ import {
   Link,
   LinkOverlay,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 
 const DashboardCard = ({ title, content, background, link }) => {
   return (
@@ -33,11 +34,11 @@ const DashboardCard = ({ title, content, background, link }) => {
       maxH="400px"
     >
       <CardHeader>
-        <LinkOverlay href={link}>
+        <NextLink href={link}>
           <Heading size="s" textTransform="uppercase">
             {title}
           </Heading>
-        </LinkOverlay>
+        </NextLink>
       </CardHeader>
       <CardBody>{content}</CardBody>
       <Image src={background} objectFit="cover"></Image>

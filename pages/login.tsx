@@ -2,14 +2,14 @@ import React, { useContext, useState } from 'react';
 import { LightningIcon } from '../assets/icons';
 import type { NextPage } from 'next';
 import styles from '../styles/Login.module.css';
-import { AuthContext } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import QR from '../components/QR';
 import Image from 'next/image'
 import Link from 'next/link'
 const satoshisHiveLogo = require('../public/satoshis_hive_logo.png')
 
 const Login: NextPage = () => {
-  const { handleLoginWithLN, lnData, handleLoginWithEmail, accountData} = useContext(AuthContext);
+  const { handleLoginWithLN, lnData, handleLoginWithEmail, accountData} = useAuth();
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const handleSubmit = (e:any) => {

@@ -5,12 +5,13 @@ import { ChakraProvider } from '@chakra-ui/react'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
+    <AuthContextProvider>
       <ChakraProvider>
-        <AuthContextProvider>
-      <Component {...pageProps} />
-    </AuthContextProvider>
-      </ChakraProvider>
+        
+        <Component {...pageProps} />
     
+      </ChakraProvider>
+    </AuthContextProvider>
   );
 }
 
