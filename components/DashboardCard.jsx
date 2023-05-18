@@ -16,22 +16,23 @@ import {
   CardBody,
   Heading,
   Image,
+  Link,
 } from "@chakra-ui/react";
 
 const DashboardCard = ({ title, content, background }) => {
   return (
     <Card
-      bg={useColorModeValue("rgba(255,255,255,0.8)", "rgba(0,0,0,0.25)")}
+      bg={useColorModeValue("rgba(255,255,255,0.95)", "rgba(0,0,0,0.95)")}
       borderColor="black"
       shadow="lg"
       rounded="md"
       minW="100px"
       maxW="350px"
-      minH="100px"
+      minH="350px"
       maxH="400px"
     >
       <CardHeader>
-        <Heading size="xs" textTransform="uppercase">
+        <Heading size="s" textTransform="uppercase">
           {title}
         </Heading>
       </CardHeader>

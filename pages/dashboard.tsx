@@ -20,8 +20,16 @@ import {
   Button,
   Box,
   useColorModeValue,
-  SimpleGrid
+  SimpleGrid,
+  LinkOverlay
 } from '@chakra-ui/react'
+import {
+  BrowserRouter as Router,
+  Route,
+  Link as RouteLink
+} from "react-router-dom";
+import NextLink from 'next/link'
+
 const satoshisHiveLogo = require('../public/satoshis_hive_logo.png')
 
 
@@ -59,12 +67,12 @@ const Home: NextPage = () => {
             <Image src={satoshisHiveLogo} width={100} height={100} />
         </Box>
         <SimpleGrid columns={3} spacing={10} >
-              <DashboardCard title="Announcements" content="Offical announcements from the Satoshi's Place team" background="dashboard/note-34687_640.png"></DashboardCard>
-              <DashboardCard title="Forum" content="Open forum for users to chat" background="dashboard/feedback-2990424_640.jpg"></DashboardCard>
-              <DashboardCard title="Marketplace" content="Buy and sell, either in person or online" background="dashboard/pixel-art-7284052_640.png"></DashboardCard>
-              <DashboardCard title="Resources" content="Helpful Bitcoin resources for all levels of experience" background="dashboard/double-exposure-4554077_640.jpg"></DashboardCard>
-              <DashboardCard title="Messages" content="Direct Messages" background="dashboard/speech-35342_640.png"></DashboardCard>
-              <DashboardCard title="Events" content="Upcoming events at Satoshi's Place and elsewhere" background="dashboard/calendar-1763587_640.png"></DashboardCard>
+              <LinkOverlay href='/announcements'><DashboardCard title="Announcements" content="Offical announcements from the Satoshi's Place team" background="dashboard/announcements.png"></DashboardCard></LinkOverlay>
+              <LinkOverlay href='/forum'><DashboardCard title="Forum" content="Open forum for users to chat" background="dashboard/forum.jpg"></DashboardCard></LinkOverlay>
+              <LinkOverlay href='/marketplace'><DashboardCard title="Marketplace" content="Buy and sell, either in person or online" background="dashboard/marketplace.png"></DashboardCard></LinkOverlay>
+              <LinkOverlay href='/resources'><DashboardCard title="Resources" content="Helpful Bitcoin resources for all levels of experience" background="dashboard/resources.jpg"></DashboardCard></LinkOverlay>
+              <LinkOverlay href='/messages'><DashboardCard title="Messages" content="Direct Messages" background="dashboard/messages.png"></DashboardCard></LinkOverlay>
+              <LinkOverlay href='/events'><DashboardCard title="Events" content="Upcoming events at Satoshi's Place and elsewhere" background="dashboard/events.png"></DashboardCard></LinkOverlay>
         </SimpleGrid>
         </Box>
     </Box>
