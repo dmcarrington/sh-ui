@@ -20,29 +20,31 @@ import {
   LinkOverlay,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
+import styles from "../styles/DashboardCard.module.css";
 
 const DashboardCard = ({ title, content, background, link }) => {
   return (
-    <Card
-      bg={useColorModeValue("rgba(255,255,255,0.95)", "rgba(0,0,0,0.95)")}
-      borderColor="black"
-      shadow="lg"
-      rounded="md"
-      minW="100px"
-      maxW="350px"
-      minH="350px"
-      maxH="400px"
-    >
-      <CardHeader>
-        <NextLink href={link}>
+    <NextLink href={link}>
+      <Card
+        bg={useColorModeValue("rgba(255,255,255,0.95)", "rgba(0,0,0,0.95)")}
+        borderColor="black"
+        shadow="lg"
+        rounded="md"
+        minW="100px"
+        maxW="350px"
+        minH="350px"
+        maxH="400px"
+        className={styles.link}
+      >
+        <CardHeader>
           <Heading size="s" textTransform="uppercase">
-            {title}
+            <b>{title}</b>
           </Heading>
-        </NextLink>
-      </CardHeader>
-      <CardBody>{content}</CardBody>
-      <Image src={background} objectFit="cover"></Image>
-    </Card>
+        </CardHeader>
+        <CardBody>{content}</CardBody>
+        <Image src={background} objectFit="cover"></Image>
+      </Card>
+    </NextLink>
   );
 };
 

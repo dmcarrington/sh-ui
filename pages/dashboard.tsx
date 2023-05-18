@@ -28,7 +28,7 @@ import {
   Route,
   Link as RouteLink
 } from "react-router-dom";
-import NextLink from 'next/link'
+
 
 const satoshisHiveLogo = require('../public/satoshis_hive_logo.png')
 
