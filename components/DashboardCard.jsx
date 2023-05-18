@@ -17,9 +17,10 @@ import {
   Heading,
   Image,
   Link,
+  LinkOverlay,
 } from "@chakra-ui/react";
 
-const DashboardCard = ({ title, content, background }) => {
+const DashboardCard = ({ title, content, background, link }) => {
   return (
     <Card
       bg={useColorModeValue("rgba(255,255,255,0.95)", "rgba(0,0,0,0.95)")}
@@ -32,9 +33,11 @@ const DashboardCard = ({ title, content, background }) => {
       maxH="400px"
     >
       <CardHeader>
-        <Heading size="s" textTransform="uppercase">
-          {title}
-        </Heading>
+        <LinkOverlay href={link}>
+          <Heading size="s" textTransform="uppercase">
+            {title}
+          </Heading>
+        </LinkOverlay>
       </CardHeader>
       <CardBody>{content}</CardBody>
       <Image src={background} objectFit="cover"></Image>

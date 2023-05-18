@@ -67,12 +67,12 @@ const Home: NextPage = () => {
             <Image src={satoshisHiveLogo} width={100} height={100} />
         </Box>
         <SimpleGrid columns={3} spacing={10} >
-              <LinkOverlay href='/announcements'><DashboardCard title="Announcements" content="Offical announcements from the Satoshi's Place team" background="dashboard/announcements.png"></DashboardCard></LinkOverlay>
-              <LinkOverlay href='/forum'><DashboardCard title="Forum" content="Open forum for users to chat" background="dashboard/forum.jpg"></DashboardCard></LinkOverlay>
-              <LinkOverlay href='/marketplace'><DashboardCard title="Marketplace" content="Buy and sell, either in person or online" background="dashboard/marketplace.png"></DashboardCard></LinkOverlay>
-              <LinkOverlay href='/resources'><DashboardCard title="Resources" content="Helpful Bitcoin resources for all levels of experience" background="dashboard/resources.jpg"></DashboardCard></LinkOverlay>
-              <LinkOverlay href='/messages'><DashboardCard title="Messages" content="Direct Messages" background="dashboard/messages.png"></DashboardCard></LinkOverlay>
-              <LinkOverlay href='/events'><DashboardCard title="Events" content="Upcoming events at Satoshi's Place and elsewhere" background="dashboard/events.png"></DashboardCard></LinkOverlay>
+              <DashboardCard title="Announcements" content="Offical announcements from the Satoshi's Place team" background="dashboard/announcements.png" link="/announcements"></DashboardCard>
+              <DashboardCard title="Forum" content="Open forum for users to chat" background="dashboard/forum.jpg" link="/forum"></DashboardCard>
+              <DashboardCard title="Marketplace" content="Buy and sell, either in person or online" background="dashboard/marketplace.png" link="/marketplace"></DashboardCard>
+              <DashboardCard title="Resources" content="Helpful Bitcoin resources for all levels of experience" background="dashboard/resources.jpg" link="/resources"></DashboardCard>
+              <DashboardCard title="Messages" content="Direct Messages" background="dashboard/messages.png" link="/messages"></DashboardCard>
+              <DashboardCard title="Events" content="Upcoming events at Satoshi's Place and elsewhere" background="dashboard/events.png" link="/events"></DashboardCard>
         </SimpleGrid>
         </Box>
     </Box>
