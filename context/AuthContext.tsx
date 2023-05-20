@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useMemo, ReactNode } from 'react';
 import { loginWithLN, loginWithEmail, pusherKey, pusherChannel, pusherCluster, registerWithEmail} from '../api';
 import { useRouter } from 'next/router';
 
@@ -28,6 +28,7 @@ interface IAuthContext {
   handleLoginWithLN: () => void;
   handleLoginWithEmail: (credentials: any) => void;
   handleRegisterWithEmail: (credentials: any) => void;
+  logout: () => void;
   lnData: LNData;
   accountData: AccountData;
 }
@@ -36,14 +37,15 @@ const defaultState = {
   handleLoginWithLN: () => {},
   handleLoginWithEmail: (credentials: any) => {},
   handleRegisterWithEmail: (credentials: any) => {},
+  logout: () => {},
   // TODO: get a unified account model merging ln and email fields from mongo
   lnData: {encoded: "", secret: "", url: "", key: ""},
   accountData: {key: "", email: "", password: "", name: "", nostrSk: "", nostrPk: ""}
 };
 
-export const AuthContext = React.createContext<IAuthContext>(defaultState);
+const AuthContext = React.createContext<IAuthContext>({} as IAuthContext);
 
-export const AuthContextProvider = ({ children }: Props) => {
+export function AuthContextProvider({ children }:{children:ReactNode;}): JSX.Element {
   const [lnData, setLnData] = useState(defaultState.lnData);
   const [accountData, setAccountData] = useState(defaultState.accountData)
 
@@ -59,12 +61,12 @@ export const AuthContextProvider = ({ children }: Props) => {
       
       channel.bind("auth", function(data:any) {
           let accountdata = accountData
-          accountData.key = data.key
-          accountData.email = data.email
-          accountData.name = data.name
-          accountData.nostrSk = data.nostrSk
-          accountData.nostrPk = data.nostrPk
-          console.log(accountData)
+          accountdata.key = data.key
+          accountdata.email = data.email
+          accountdata.name = data.name
+          accountdata.nostrSk = data.nostrSk
+          accountdata.nostrPk = data.nostrPk
+          console.log(accountdata)
           setAccountData(accountdata)
           router.push('/dashboard')
       })
@@ -101,15 +103,31 @@ export const AuthContextProvider = ({ children }: Props) => {
     }
   }
 
-  const contextValue = {
-    lnData,
-    accountData,
-    handleLoginWithLN,
-    handleLoginWithEmail,
-    handleRegisterWithEmail
-  };
+  const logout = () => {
+    setAccountData({key: "", email: "", password: "", name: "", nostrSk: "", nostrPk: ""})
+    setLnData({encoded: "", secret: "", url: "", key: ""})
+    router.push('/login')
+  }
+
+  // Make the provider update only when it should
+  const memoedValue = useMemo(
+    () => ({
+      lnData,
+      accountData,
+      handleLoginWithEmail,
+      handleLoginWithLN,
+      handleRegisterWithEmail,
+      logout
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [lnData, accountData]
+  );
 
   return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={memoedValue as IAuthContext}>{children}</AuthContext.Provider>
   );
 };
+
+export function useAuth(): IAuthContext {
+  return useContext(AuthContext);
+}

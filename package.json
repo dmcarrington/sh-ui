@@ -9,13 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.6.1",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
     "axios": "^0.27.2",
+    "framer-motion": "^10.12.10",
     "next": "12.1.6",
     "nostr-tools": "^1.10.1",
     "pusher-js": "^8.0.2",
     "qrcode.react": "^3.0.2",
     "react": "18.1.0",
     "react-dom": "18.1.0",
+    "react-router-dom": "^6.11.2",
     "react-scripts": "^5.0.1",
     "socket.io-client": "^4.5.1"
   },

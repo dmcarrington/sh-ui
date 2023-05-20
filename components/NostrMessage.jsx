@@ -1,7 +1,7 @@
 import styles from "../styles/Nostr.module.css";
 import { formatDate } from "../utils/time";
 
-function NostrMessage({ content, sender, timestamp, key }) {
+function NostrMessage({ content, sender, timestamp }) {
   let dtg = new Date();
   dtg.setTime(timestamp * 1000);
   const formattedDate = formatDate(dtg);

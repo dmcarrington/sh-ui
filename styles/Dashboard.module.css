@@ -1,7 +1,5 @@
 .container {
-  padding: 0 2rem;
   border: 6px solid #ff9416;
-  display: flex;
 }
 
 .side {

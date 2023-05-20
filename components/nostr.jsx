@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import {
   generatePrivateKey,
   getEventHash,
@@ -11,7 +11,7 @@ import styles from "../styles/Nostr.module.css";
 import NostrMessage from "./NostrMessage";
 
 const NostrPanel = () => {
-  const { accountData } = useContext(AuthContext);
+  const { accountData } = useAuth();
 
   const [sk, setSk] = useState(() => {
     console.log("nostrSk: " + accountData.nostrSk);
