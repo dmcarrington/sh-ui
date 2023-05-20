@@ -22,7 +22,8 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
-  AlertDescription
+  AlertDescription,
+  Heading
 } from '@chakra-ui/react'
 import axios from "axios"
 import NextLink from "next/link"
@@ -38,18 +39,6 @@ const Settings: NextPage = () => {
   const [email, setEmail] = useState(accountData.email)
   const [updateSuccess, setUpdateSuccess] = useState(false)
   const [updateFailed, setUpdateFailed] = useState(false)
-
-  /*let _name = "Anon"
-  if(accountData.name){
-    _name = accountData.name
-  }
-  setName(_name)
-
-  let _email = ""
-  if(accountData.email){
-    _email = accountData.email
-  }
-  setEmail(_email)*/
 
   const setAccountData = async () => {
     try {
@@ -76,63 +65,84 @@ const Settings: NextPage = () => {
       
   }
 
+  const backgroundImg = {
+    height: '100%',
+    width:'100%',
+    minH: '100vh',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundAttachment: 'fixed',
+    backgroundImage: 'manchester.jpg',
+    position:'absolute'
+  }
+
   return (
     <section className={styles.container}>
+        <Box sx={backgroundImg}></Box>
         <Box display="grid" justifyContent="center">
-            <Box padding={10}>
-            {updateSuccess ? (
-                <Alert
-                    status='success'
-                    variant='subtle'
-                    flexDirection='column'
-                    alignItems='center'
-                    justifyContent='center'
-                    textAlign='center'
-                    height='200px'
-                    >
-                    <AlertIcon boxSize='40px' mr={0} />
-                    <AlertTitle mt={4} mb={1} fontSize='lg'>
-                        Details Updated!
-                    </AlertTitle>
-                    <AlertDescription maxWidth='sm'>
-                        Your details were successfully updated on the server.
-                    </AlertDescription>
-                </Alert>
-                ) : (<></>)
-            }
-            {updateFailed ? (
-                <Alert
-                    status='error'
-                    variant='subtle'
-                    flexDirection='column'
-                    alignItems='center'
-                    justifyContent='center'
-                    textAlign='center'
-                    height='200px'
-                    >
-                    <AlertIcon boxSize='40px' mr={0} />
-                    <AlertTitle mt={4} mb={1} fontSize='lg'>
-                        Update Failed!
-                    </AlertTitle>
-                    <AlertDescription maxWidth='sm'>
-                        Failed to update your details.
-                    </AlertDescription>
-                </Alert>
-                ) : (<></>)
-            }
+            <Box z-index="999" position="relative" width="800px" maxW="90vw" maxH="95vh" marginBottom="10px">
+                <Box gridArea="1 / 1" padding="10px" border="1px" width="100%" borderColor="black" marginY="15px" shadow="lg" rounded="md" bg={useColorModeValue(
+                            'rgba(255,255,255,0.8)',
+                            'rgba(0,0,0,0.25)'
+                        )}>
+                    <Box padding={10}>
+                    {updateSuccess ? (
+                        <Alert
+                            status='success'
+                            variant='subtle'
+                            flexDirection='column'
+                            alignItems='center'
+                            justifyContent='center'
+                            textAlign='center'
+                            height='200px'
+                            >
+                            <AlertIcon boxSize='40px' mr={0} />
+                            <AlertTitle mt={4} mb={1} fontSize='lg'>
+                                Details Updated!
+                            </AlertTitle>
+                            <AlertDescription maxWidth='sm'>
+                                Your details were successfully updated on the server.
+                            </AlertDescription>
+                        </Alert>
+                        ) : (<></>)
+                    }
+                    {updateFailed ? (
+                        <Alert
+                            status='error'
+                            variant='subtle'
+                            flexDirection='column'
+                            alignItems='center'
+                            justifyContent='center'
+                            textAlign='center'
+                            height='200px'
+                            >
+                            <AlertIcon boxSize='40px' mr={0} />
+                            <AlertTitle mt={4} mb={1} fontSize='lg'>
+                                Update Failed!
+                            </AlertTitle>
+                            <AlertDescription maxWidth='sm'>
+                                Failed to update your details.
+                            </AlertDescription>
+                        </Alert>
+                        ) : (<></>)
+                    }
+                    </Box>
+                    <Stack spacing = {4} alignItems="center">
+                        <Heading>Account Settings</Heading>    
+                        <InputGroup borderColor="black">
+                            <InputLeftAddon children='Name: ' />
+                            <Input value={name} onChange = {(e) => setName(e.target.value)} />
+                        </InputGroup>
+                        <InputGroup borderColor="black">
+                            <InputLeftAddon children='Email: ' />
+                            <Input value={email} onChange = {(e) => setEmail(e.target.value)} />
+                        </InputGroup>
+                        <Button onClick={setAccountData} width="50%">Save</Button>
+                        <Button width="50%"><NextLink href="/dashboard">Exit</NextLink></Button>
+                    </Stack>
+                </Box>
             </Box>
-            <Stack spacing = {4}>
-            <InputGroup>
-                <InputLeftAddon children='Name: ' />
-                <Input value={name} onChange = {(e) => setName(e.target.value)} />
-            </InputGroup>
-            <InputGroup>
-                <InputLeftAddon children='Email: ' />
-                <Input value={email} onChange = {(e) => setEmail(e.target.value)} />
-            </InputGroup>
-            <Button onClick={setAccountData}>Save</Button>
-            <Button><NextLink href="/dashboard">Exit</NextLink></Button>
-            </Stack>
         </Box>
     </section>
   )
