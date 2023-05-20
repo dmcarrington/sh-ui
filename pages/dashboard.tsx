@@ -35,7 +35,7 @@ const Home: NextPage = () => {
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundAttachment: 'fixed',
-    backgroundImage: 'sp_logo.jpg',
+    backgroundImage: 'manchester.jpg',
     position:'absolute'
   }
   return (
