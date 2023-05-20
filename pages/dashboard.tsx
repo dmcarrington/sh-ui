@@ -21,7 +21,9 @@ import {
   Box,
   useColorModeValue,
   SimpleGrid,
-  LinkOverlay
+  LinkOverlay,
+  Flex,
+  Spacer
 } from '@chakra-ui/react'
 import {
   BrowserRouter as Router,
@@ -31,6 +33,7 @@ import {
 
 
 const satoshisHiveLogo = require('../public/satoshis_hive_logo.png')
+const userIcon = require('../public/dashboard/user.png')
 
 
 
@@ -65,7 +68,23 @@ const Home: NextPage = () => {
                           'rgba(255,255,255,0.8)',
                           'rgba(0,0,0,0.25)'
                       )}>
-            <Image src={satoshisHiveLogo} width={100} height={100} />
+            <Flex>
+              <Box p='4'>
+                <Image src={satoshisHiveLogo} width={60} height={60} />
+              </Box>
+              <Spacer />
+              <Box p='4'>
+              <Menu>
+                <MenuButton>
+                  <Image src={userIcon} width={60} height={60}/>
+                </MenuButton>
+                <MenuList>
+                  <MenuItem>Settings</MenuItem>
+                  <MenuItem>Logout</MenuItem>
+                </MenuList> 
+              </Menu>
+              </Box>
+            </Flex>
         </Box>
         <SimpleGrid columns={3} spacing={10} >
               <DashboardCard title="Announcements" content="Offical announcements from the Satoshi's Place team" background="dashboard/announcements.png" link="/announcements"></DashboardCard>
