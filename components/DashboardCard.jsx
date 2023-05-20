@@ -33,7 +33,7 @@ const DashboardCard = ({ title, content, background, link }) => {
         minW="100px"
         maxW="350px"
         minH="350px"
-        maxH="400px"
+        maxH="370px"
         className={styles.link}
       >
         <CardHeader>

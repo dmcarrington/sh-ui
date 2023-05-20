@@ -1,7 +1,9 @@
 import type { NextPage } from 'next'
+import NextLink from "next/link";
 import Image from 'next/image'
 import { useAuth } from '../context/AuthContext'
 import DashboardCard from '../components/DashboardCard'
+import styles from '../styles/Dashboard.module.css'
 import {
   Menu,
   MenuButton,
@@ -37,11 +39,11 @@ const Home: NextPage = () => {
     position:'absolute'
   }
   return (
-    <>
+    <section className={styles.container}>
     <Box display="grid" justifyContent="center">
       
       <Box sx={backgroundImg}></Box>
-      <Box z-index="999" position="relative" width="800px" maxW="90vw">
+      <Box z-index="999" position="relative" width="800px" maxW="90vw" maxH="95vh" marginBottom="10px">
         <Box gridArea="1 / 1" border="1px" width="100%" borderColor="black" marginY="15px" shadow="lg" rounded="md" bg={useColorModeValue(
                           'rgba(255,255,255,0.8)',
                           'rgba(0,0,0,0.25)'
@@ -57,7 +59,7 @@ const Home: NextPage = () => {
                   <Image src={userIcon} width={60} height={60}/>
                 </MenuButton>
                 <MenuList>
-                  <MenuItem>Settings</MenuItem>
+                  <MenuItem><NextLink href="/settings">Settings</NextLink></MenuItem>
                   <MenuItem onClick={logout}>Logout</MenuItem>
                 </MenuList> 
               </Menu>
@@ -75,7 +77,8 @@ const Home: NextPage = () => {
         </Box>
     </Box>
     
-    </>
+    
+    </section>
   )
 }
 
