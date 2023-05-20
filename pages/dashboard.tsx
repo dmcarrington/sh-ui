@@ -1,46 +1,24 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Link from 'next/link'
 import Image from 'next/image'
 import { useAuth } from '../context/AuthContext'
-import styles from '../styles/Dashboard.module.css'
-import { useContext } from 'react';
-const crypto = require('crypto');
-import NostrPanel from '../components/nostr'
 import DashboardCard from '../components/DashboardCard'
 import {
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-  Button,
   Box,
   useColorModeValue,
   SimpleGrid,
-  LinkOverlay,
   Flex,
   Spacer
 } from '@chakra-ui/react'
-import {
-  BrowserRouter as Router,
-  Route,
-  Link as RouteLink
-} from "react-router-dom";
-
 
 const satoshisHiveLogo = require('../public/satoshis_hive_logo.png')
 const userIcon = require('../public/dashboard/user.png')
 
-
-
 const Home: NextPage = () => {
-  const { lnData , accountData} = useAuth();
-  const key = accountData.key; 
-  const email = accountData.email
+  const { accountData, logout} = useAuth();
   console.log(accountData)
   let name = "Anon"
   if(accountData.name){
@@ -80,7 +58,7 @@ const Home: NextPage = () => {
                 </MenuButton>
                 <MenuList>
                   <MenuItem>Settings</MenuItem>
-                  <MenuItem>Logout</MenuItem>
+                  <MenuItem onClick={logout}>Logout</MenuItem>
                 </MenuList> 
               </Menu>
               </Box>

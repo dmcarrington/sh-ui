@@ -28,6 +28,7 @@ interface IAuthContext {
   handleLoginWithLN: () => void;
   handleLoginWithEmail: (credentials: any) => void;
   handleRegisterWithEmail: (credentials: any) => void;
+  logout: () => void;
   lnData: LNData;
   accountData: AccountData;
 }
@@ -36,6 +37,7 @@ const defaultState = {
   handleLoginWithLN: () => {},
   handleLoginWithEmail: (credentials: any) => {},
   handleRegisterWithEmail: (credentials: any) => {},
+  logout: () => {},
   // TODO: get a unified account model merging ln and email fields from mongo
   lnData: {encoded: "", secret: "", url: "", key: ""},
   accountData: {key: "", email: "", password: "", name: "", nostrSk: "", nostrPk: ""}
@@ -101,13 +103,11 @@ export function AuthContextProvider({ children }:{children:ReactNode;}): JSX.Ele
     }
   }
 
-  const contextValue = {
-    lnData,
-    accountData,
-    handleLoginWithLN,
-    handleLoginWithEmail,
-    handleRegisterWithEmail
-  };
+  const logout = () => {
+    setAccountData({key: "", email: "", password: "", name: "", nostrSk: "", nostrPk: ""})
+    setLnData({encoded: "", secret: "", url: "", key: ""})
+    router.push('/login')
+  }
 
   // Make the provider update only when it should
   const memoedValue = useMemo(
@@ -116,7 +116,8 @@ export function AuthContextProvider({ children }:{children:ReactNode;}): JSX.Ele
       accountData,
       handleLoginWithEmail,
       handleLoginWithLN,
-      handleRegisterWithEmail
+      handleRegisterWithEmail,
+      logout
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [lnData, accountData]
