@@ -1,6 +1,6 @@
 # Satoshi's Hive UI
 
-Demonstration of a community application built on top of Lightning.
+Demonstration of a Bitcoin community application built on top of Lightning.
 
 ```
 
